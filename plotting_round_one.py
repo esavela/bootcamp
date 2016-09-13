@@ -37,7 +37,6 @@ plt.xlabel('Cross-sectional area (μm$^2$)')
 plt.ylabel('frequency')
 plt.legend(('low concentration', 'high concentration'), loc='upper right')
 
-plt.show()
-
 # Save the figure
 plt.savefig('egg_area_histograms.pdf', bbox_inches='tight')
+plt.show()
