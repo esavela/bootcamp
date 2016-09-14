@@ -22,3 +22,10 @@ print('\n')
 df_frog_ii = df.loc[df['ID'] == 'II', ['impact time (ms)', 'adhesive strength (Pa)']]
 print(df_frog_ii)
 print('\n')
+
+# Extract the adhesive force and the time the frog pulls on the target for
+# juvenile frogs (frogs III and IV)
+df_frogs = df.loc[df['ID'].isin(['III', 'IV']), ['time frog pulls on target (ms)',
+                     'adhesive strength (Pa)']]
+print(df_frogs)
+print('\n')
