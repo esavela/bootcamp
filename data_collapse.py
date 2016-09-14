@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # Import Seaborn and settings
 import seaborn as sns
 rc = {'lines.linewidth' : 2, 'axes.labelsize' : 18,
-      'axes.titlesize' : 18}
+      'axes.titlesize' : 28}
 sns.set(rc=rc)
 
 
@@ -35,7 +35,7 @@ def bohr_parameter(c, RK, KdA=0.017, KdI=0.002, Kswitch=5.8):
     """
     num = (1 + c/KdA)**2
     den = (1 + c/KdA)**2 + Kswitch * (1 + c/KdI)**2
-    bohr_par = np.log(RK) - np.log(num/den)
+    bohr_par = -np.log(RK) - np.log(num/den)
 
     return bohr_par
 
@@ -64,29 +64,31 @@ q18m_fold = q18m_lac[:,1]
 q18a_IPTG = q18a_lac[:,0]
 q18a_fold = q18a_lac[:,1]
 
+# Convert raw ITPG concentration to Bohr parameter
+wt_IPTG_bohr = bohr_parameter(wt_IPTG, 141.5)
+q18m_IPTG_bohr = bohr_parameter(q18m_IPTG, 1332)
+q18a_IPTG_bohr = bohr_parameter(q18a_IPTG, 16.56)
+
 # Compute theoretical values
 IPTG_theo = np.logspace(9e-6, 25, 500)
 bohr_theo = np.linspace(-6, 6, 500)
-
-# Compute theoretical fold Change, with bohr parameter
 fold_theo = fold_change_bohr(bohr_theo)
 
 # Ensure no open plots
 plt.close()
 
-# Plot all experimental data
-# plt.semilogx(wt_IPTG, wt_fold, marker='.', linestyle='none',
-#          markersize=20, alpha=0.8)
-# plt.semilogx(q18m_IPTG, q18m_fold, marker='.', linestyle='none',
-#          markersize=20, alpha=0.8)
-# plt.semilogx(q18a_IPTG, q18a_fold, marker='.', linestyle='none',
-#          markersize=20, alpha=0.8)
-
-# Plot theoretical data
+# Plot all experimental and theoretical data
+plt.plot(wt_IPTG_bohr, wt_fold, marker='.', linestyle='none',
+         markersize=20, alpha=0.8)
+plt.plot(q18m_IPTG_bohr, q18m_fold, marker='.', linestyle='none',
+         markersize=20, alpha=0.8)
+plt.plot(q18a_IPTG_bohr, q18a_fold, marker='.', linestyle='none',
+         markersize=20, alpha=0.8)
 plt.plot(bohr_theo, fold_theo, color='gray')
 plt.xlim(-6,6)
 plt.xlabel('Bohr Parameter')
 plt.ylabel('Fold Change')
+plt.title('Data Collapse!')
 plt.legend(('wt_lac', 'q18m_lac', 'q18a_lac',
             'theoretical'), loc='lower right')
 plt.show()
