@@ -90,5 +90,6 @@ plt.xlabel('Bohr Parameter')
 plt.ylabel('Fold Change')
 plt.title('Data Collapse!')
 plt.legend(('wt_lac', 'q18m_lac', 'q18a_lac',
-            'theoretical'), loc='lower right')
+            'theoretical curve'), loc='lower right')
+plt.savefig('data_collapse_ex3.pdf', bbox_inches='tight')
 plt.show()
