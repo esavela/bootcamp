@@ -59,7 +59,9 @@ def isolate_objects(image, cutoff_L, cutoff_U):
     cutoff_H corresponds to the upper limit of size
     """
     n_regions = 0
-    im_props = skimage.measure.regionprops(image, intensity_image=im_fl_filt)
+    # distance between pixels
+    ip_dst = 0.063
+    im_props = skimage.measure.regionprops(image)
 
     #filtered image
     im_bw_filt = image > 0
