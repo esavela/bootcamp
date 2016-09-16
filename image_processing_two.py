@@ -30,7 +30,7 @@ im_blur = skimage.filters.gaussian(phase_im, 50.0)
 phase_float = skimage.img_as_float(phase_im)
 phase_sub = phase_float - im_blur
 
-#Show both.
+# Show both.
 plt.figure()
 plt.imshow(phase_float, cmap=plt.cm.viridis)
 plt.title('original')
