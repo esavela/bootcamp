@@ -27,10 +27,13 @@ phase_im_med = image_utils.med_filter(phase_im, mask_size=3)
 phase_im_gauss = image_utils.gauss_mask(phase_im_med, blur_radius=50.0)
 
 # Threshold the image
-# phase_im_thresh = image_utils.img_thresholding(phase_im_gauss)
+phase_im_thresh = image_utils.img_thresholding(phase_im_gauss)
+
+# Remove too big and too small objects
+im_bw_filt, num_object = image_utils.isolate_objects(phase_im_thresh, 130, 400)
 
 # Display Figures
 with sns.axes_style('dark'):
     fig, ax = plt.subplots(1, 2, figsize=(9.5, 8))
     ax[0].imshow(phase_im_original, cmap=plt.cm.viridis)
-    ax[1].imshow(phase_im_gauss, cmap=plt.cm.viridis)
+    ax[1].imshow(im_bw_filt, cmap=plt.cm.Greys_r)

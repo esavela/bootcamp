@@ -50,15 +50,33 @@ def img_thresholding(image):
 
     return image_bw
 
+
+def isolate_objects(image, cutoff_L, cutoff_U):
+    """
+    Remove objects out of the size range of bacteria (too big or too small).
+    input a thresholded image
+    cutoff_L corresponds to the lower limit of size
+    cutoff_H corresponds to the upper limit of size
+    """
+    n_regions = 0
+    im_props = skimage.measure.regionprops(image, intensity_image=im_fl_filt)
+
+    #filtered image
+    im_bw_filt = image > 0
+
+    for prop in im_props:
+        if prop.area < cutoff_L or prop.area > cutoff_H:
+            im_bw_filt[image==prop.label] = 0
+        else:
+            n_regions += 1
+
+    return im_bw_filt, n_regions
+
+
+
 # def rm_border_objects():
 #     """
 #     Remove bacteria or objects near/touching the image border.
-#     """
-#
-#
-# def isolate_bacteria():
-#     """
-#     Remove objects out of the size range of bacteria (too big or too small).
 #     """
 #
 #
